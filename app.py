@@ -6,12 +6,12 @@ import torch
 import torchaudio
 from generator import Segment, load_csm_1b
 from huggingface_hub import hf_hub_download, login
-from watermarking import watermark
+# from watermarking import watermark
 
 # api_key = os.getenv("HF_TOKEN")
 gpu_timeout = int(os.getenv("GPU_TIMEOUT", 60))
 # CSM_1B_HF_WATERMARK = list(map(int, os.getenv("WATERMARK_KEY").split(" ")))
-CSM_1B_HF_WATERMARK = "CSM_1B_HF_WATERMARK"
+# CSM_1B_HF_WATERMARK = "CSM_1B_HF_WATERMARK"
 
 # login(token=api_key)
 
@@ -162,12 +162,12 @@ def _infer(
     # Watermarking ensures transparency, dissuades misuse, and enables traceability.
     # Please be a responsible AI citizen and keep the watermarking in place.
     # If using CSM 1B in another application, use your own private key and keep it secret.
-    audio_tensor, wm_sample_rate = watermark(
-        generator._watermarker, audio_tensor, generator.sample_rate, CSM_1B_HF_WATERMARK
-    )
-    audio_tensor = torchaudio.functional.resample(
-        audio_tensor, orig_freq=wm_sample_rate, new_freq=generator.sample_rate
-    )
+    # audio_tensor, wm_sample_rate = watermark(
+    #     generator._watermarker, audio_tensor, generator.sample_rate, CSM_1B_HF_WATERMARK
+    # )
+    # audio_tensor = torchaudio.functional.resample(
+    #     audio_tensor, orig_freq=wm_sample_rate, new_freq=generator.sample_rate
+    # )
 
     audio_array = (audio_tensor * 32768).to(torch.int16).cpu().numpy()
 
@@ -253,4 +253,4 @@ with gr.Blocks() as app:
         outputs=[audio_output],
     )
 
-app.launch(ssr_mode=True)
+app.launch(ssr_mode=True, share=True)
