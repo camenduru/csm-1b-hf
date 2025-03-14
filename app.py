@@ -2,7 +2,6 @@ import os
 
 import gradio as gr
 import numpy as np
-import spaces
 import torch
 import torchaudio
 from generator import Segment, load_csm_1b
@@ -106,8 +105,6 @@ device = "cuda" if torch.cuda.is_available() else "cpu"
 model_path = hf_hub_download(repo_id="audo/csm-1b", filename="ckpt.pt")
 generator = load_csm_1b(model_path, device)
 
-
-@spaces.GPU(duration=gpu_timeout)
 def infer(
     text_prompt_speaker_a,
     text_prompt_speaker_b,
