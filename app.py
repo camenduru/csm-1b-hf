@@ -9,11 +9,12 @@ from generator import Segment, load_csm_1b
 from huggingface_hub import hf_hub_download, login
 from watermarking import watermark
 
-api_key = os.getenv("HF_TOKEN")
+# api_key = os.getenv("HF_TOKEN")
 gpu_timeout = int(os.getenv("GPU_TIMEOUT", 60))
-CSM_1B_HF_WATERMARK = list(map(int, os.getenv("WATERMARK_KEY").split(" ")))
+# CSM_1B_HF_WATERMARK = list(map(int, os.getenv("WATERMARK_KEY").split(" ")))
+CSM_1B_HF_WATERMARK = "CSM_1B_HF_WATERMARK"
 
-login(token=api_key)
+# login(token=api_key)
 
 SPACE_INTRO_TEXT = """\
 # Sesame CSM 1B
@@ -102,7 +103,7 @@ SPEAKER_PROMPTS = {
 }
 
 device = "cuda" if torch.cuda.is_available() else "cpu"
-model_path = hf_hub_download(repo_id="sesame/csm-1b", filename="ckpt.pt")
+model_path = hf_hub_download(repo_id="audo/csm-1b", filename="ckpt.pt")
 generator = load_csm_1b(model_path, device)
 
 
